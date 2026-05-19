@@ -48,3 +48,20 @@ This document tracks the current status and immediate next steps for the project
 - Created `WORKFLOW.MD`.
 - Created `RULES.MD`.
 - Created `CONTEXT.MD`.
+- Restructured `public/` directory (created `images`, `css`, `js`, moved assets).
+- Updated `public/index.html` asset paths.
+- Initialized Git repository and performed first commit.
+
+## Pending Tasks
+- **Git Push to GitHub:** The initial push to `https://github.com/divmonkey/PromptDeck` failed. This needs to be verified (repository existence, access rights) and retried.
+
+## Next Immediate Steps
+1.  **Scaffold Svelte Project with Vite:**
+    *   Use `npx create-svelte@latest` to create a new Svelte project within the root directory.
+    *   Configure Vite for the project.
+2.  **Integrate Tailwind CSS:**
+    *   Install Tailwind CSS and its dependencies.
+    *   Configure `tailwind.config.js` and `postcss.config.js`.
+    *   Include Tailwind directives in the main CSS.
+3.  **Configure Condensed Font:**
+    *   Research and apply a suitable condensed font for numbers/accents using Tailwind CSS configuration.
