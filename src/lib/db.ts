@@ -3,7 +3,7 @@ import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
 const DB_PATH = process.env.DB_PATH || 'promptvault.db';
-const UPLOAD_DIR = join(process.cwd(), 'public', 'uploads');
+const UPLOAD_DIR = join(process.cwd(), 'static', 'uploads');
 
 if (!existsSync(UPLOAD_DIR)) mkdirSync(UPLOAD_DIR, { recursive: true });
 
