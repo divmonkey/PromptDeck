@@ -1,27 +1,14 @@
 <script lang="ts">
-	interface SnackbarItem {
-		id: number;
-		message: string;
-		type: 'success' | 'error' | 'warning' | 'info';
-		duration: number;
-	}
+	import { onMount } from 'svelte';
+	import { subscribe, dismiss, type SnackbarMessage } from '$lib/snackbarStore';
 
-	let snacks = $state<SnackbarItem[]>([]);
-	let idCounter = 0;
+	let snacks = $state<SnackbarMessage[]>([]);
 
-	export function showSnackbar(
-		message: string,
-		type: SnackbarItem['type'] = 'info',
-		duration = 4000
-	) {
-		const id = ++idCounter;
-		snacks = [...snacks, { id, message, type, duration }];
-		setTimeout(() => dismiss(id), duration);
-	}
-
-	function dismiss(id: number) {
-		snacks = snacks.filter((s) => s.id !== id);
-	}
+	onMount(() => {
+		return subscribe((s) => {
+			snacks = s;
+		});
+	});
 
 	const typeStyles = {
 		success: 'snackbar--success',
@@ -56,7 +43,6 @@
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
 					</svg>
 				</button>
-				<!-- Progress bar -->
 				<div class="snackbar__progress" style="animation-duration: {snack.duration}ms"></div>
 			</div>
 		{/each}
