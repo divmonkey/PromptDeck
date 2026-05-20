@@ -16,10 +16,8 @@
 	let timeLeft = $state(0);
 	let likeInterval = $state<ReturnType<typeof setInterval> | null>(null);
 
-	// Check localStorage for existing cooldown on mount AND when prompt changes
-	$effect(() => {
-		const id = prompt.id;
-		const lastLiked = localStorage.getItem(`like_${id}`);
+	function checkCooldown() {
+		const lastLiked = localStorage.getItem(`like_${prompt.id}`);
 		if (lastLiked) {
 			const diff = Date.now() - parseInt(lastLiked);
 			if (diff < 86400000) {
@@ -36,8 +34,17 @@
 						}
 					}
 				}, 1000);
+				return true;
 			}
 		}
+		canLike = true;
+		return false;
+	}
+
+	// Check on mount / when prompt changes
+	$effect(() => {
+		const _id = prompt.id;
+		checkCooldown();
 		return () => {
 			if (likeInterval) {
 				clearInterval(likeInterval);
@@ -49,7 +56,10 @@
 	async function toggleLike(e?: MouseEvent) {
 		if (e) triggerRipple(e);
 
-		if (!canLike) {
+		// Always re-check localStorage before deciding
+		const isOnCooldown = checkCooldown();
+
+		if (isOnCooldown || !canLike) {
 			onToast?.(`You already voted. Wait ${formatTime(timeLeft)} to vote again.`, 'warning');
 			return;
 		}
@@ -79,7 +89,6 @@
 				}
 			}, 1000);
 		} else {
-			// Server rejected (already voted from another session)
 			const err = await res.json().catch(() => ({ error: 'Vote failed' }));
 			onToast?.(err.error || 'You already voted.', 'warning');
 			canLike = false;
