@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import PromptGrid from '$lib/components/PromptGrid.svelte';
 	import PromptModal from '$lib/components/PromptModal.svelte';
-	import Toast from '$lib/components/Toast.svelte';
+	import Snackbar from '$lib/components/Snackbar.svelte';
 	import type { Prompt } from '$lib/types';
 
 	let prompts = $state<Prompt[]>([]);
@@ -14,18 +14,10 @@
 	let showModal = $state(false);
 	let loading = $state(true);
 
-	// Toast state
-	let toastMessage = $state('');
-	let toastShow = $state(false);
-	let toastTimer: ReturnType<typeof setTimeout> | null = null;
+	let snackbarRef: ReturnType<typeof Snackbar> | null = $state(null);
 
-	function showToast(message: string) {
-		toastMessage = message;
-		toastShow = true;
-		if (toastTimer) clearTimeout(toastTimer);
-		toastTimer = setTimeout(() => {
-			toastShow = false;
-		}, 2000);
+	function showToast(message: string, type: 'success' | 'error' | 'warning' | 'info' = 'success') {
+		snackbarRef?.showSnackbar(message, type);
 	}
 
 	// Drag-scroll refs
@@ -128,7 +120,7 @@
 
 <svelte:window onmouseup={endDrag} onmousemove={doDrag} ontouchend={endDrag} ontouchmove={doDrag} />
 
-<Toast message={toastMessage} show={toastShow} />
+<Snackbar bind:this={snackbarRef} />
 
 <div class="page-dashboard hero-bg">
 	<!-- Header -->
