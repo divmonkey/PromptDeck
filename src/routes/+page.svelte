@@ -5,12 +5,48 @@
 	import type { Prompt } from '$lib/types';
 
 	let prompts = $state<Prompt[]>([]);
+	let allPrompts = $state<Prompt[]>([]);
 	let tags = $state<string[]>([]);
 	let search = $state('');
 	let selectedType = $state('all');
 	let selectedTag = $state('all');
 	let showModal = $state(false);
 	let loading = $state(true);
+
+	// Drag-scroll refs
+	let typeRow: HTMLDivElement | null = $state(null);
+	let tagRow: HTMLDivElement | null = $state(null);
+	let isDragging = false;
+	let startX = 0;
+	let scrollLeft = 0;
+	let activeRow: HTMLDivElement | null = null;
+
+	function startDrag(e: MouseEvent | TouchEvent, row: HTMLDivElement) {
+		isDragging = true;
+		activeRow = row;
+		const pageX = 'touches' in e ? e.touches[0].pageX : e.pageX;
+		startX = pageX - row.offsetLeft;
+		scrollLeft = row.scrollLeft;
+		row.style.cursor = 'grabbing';
+		row.style.userSelect = 'none';
+	}
+
+	function endDrag() {
+		if (!activeRow) return;
+		isDragging = false;
+		activeRow.style.cursor = 'grab';
+		activeRow.style.userSelect = '';
+		activeRow = null;
+	}
+
+	function doDrag(e: MouseEvent | TouchEvent) {
+		if (!isDragging || !activeRow) return;
+		e.preventDefault();
+		const pageX = 'touches' in e ? e.touches[0].pageX : e.pageX;
+		const x = pageX - activeRow.offsetLeft;
+		const walk = (x - startX) * 1.5;
+		activeRow.scrollLeft = scrollLeft - walk;
+	}
 
 	async function loadPrompts() {
 		loading = true;
@@ -23,6 +59,11 @@
 		loading = false;
 	}
 
+	async function loadAllPrompts() {
+		const res = await fetch('/api/prompts');
+		allPrompts = await res.json();
+	}
+
 	async function loadTags() {
 		const res = await fetch('/api/tags');
 		tags = await res.json();
@@ -30,12 +71,31 @@
 
 	async function createPrompt(formData: FormData) {
 		await fetch('/api/prompts', { method: 'POST', body: formData });
+		await loadAllPrompts();
 		await loadPrompts();
 	}
+
+	function selectType(value: string) {
+		selectedType = value;
+		selectedTag = 'all';
+		loadPrompts();
+	}
+
+	const filteredTags = $derived(() => {
+		if (selectedType === 'all') return tags;
+		const set = new Set<string>();
+		for (const p of allPrompts) {
+			if (p.type === selectedType) {
+				for (const t of p.tags) set.add(t);
+			}
+		}
+		return Array.from(set).sort();
+	});
 
 	onMount(() => {
 		loadPrompts();
 		loadTags();
+		loadAllPrompts();
 	});
 
 	const types = [
@@ -50,6 +110,8 @@
 <svelte:head>
 	<title>PromptDeck</title>
 </svelte:head>
+
+<svelte:window onmouseup={endDrag} onmousemove={doDrag} ontouchend={endDrag} ontouchmove={doDrag} />
 
 <div class="min-h-screen bg-[#0f1117]">
 	<!-- Header -->
@@ -110,31 +172,45 @@
 	<!-- Filters -->
 	<div class="border-b border-[#2a2e3b] bg-[#161922]">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-			<div class="flex items-center gap-3 overflow-x-auto">
-				<span class="text-xs text-[#6b7280] uppercase tracking-wider font-medium whitespace-nowrap">Type</span>
+			<!-- Type row -->
+			<div
+				bind:this={typeRow}
+				class="flex items-center gap-3 overflow-hidden cursor-grab select-none"
+				onmousedown={(e) => startDrag(e, typeRow!)}
+				ontouchstart={(e) => startDrag(e, typeRow!)}
+				role="region"
+				aria-label="Type filter"
+			>
+				<span class="text-xs text-[#6b7280] uppercase tracking-wider font-medium whitespace-nowrap shrink-0">Type</span>
 				{#each types as t}
 					<button
-						onclick={() => { selectedType = t.value; loadPrompts(); }}
-						class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors {selectedType === t.value ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d] text-[#9ca3af] hover:text-[#e5e7eb]'}"
-					>
+						onclick={() => selectType(t.value)}
+						class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedType === t.value ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d] text-[#9ca3af] hover:text-[#e5e7eb]'}">
 						{t.label}
 					</button>
 				{/each}
 			</div>
-			{#if tags.length > 0}
-				<div class="flex items-center gap-3 mt-2 overflow-x-auto">
-					<span class="text-xs text-[#6b7280] uppercase tracking-wider font-medium whitespace-nowrap">Tags</span>
+
+			<!-- Tag row -->
+			{#if filteredTags().length > 0}
+				<div
+					bind:this={tagRow}
+					class="flex items-center gap-3 mt-2 overflow-hidden cursor-grab select-none"
+					onmousedown={(e) => startDrag(e, tagRow!)}
+					ontouchstart={(e) => startDrag(e, tagRow!)}
+					role="region"
+					aria-label="Tag filter"
+				>
+					<span class="text-xs text-[#6b7280] uppercase tracking-wider font-medium whitespace-nowrap shrink-0">Tags</span>
 					<button
 						onclick={() => { selectedTag = 'all'; loadPrompts(); }}
-						class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors {selectedTag === 'all' ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d] text-[#9ca3af] hover:text-[#e5e7eb]'}"
-					>
+						class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedTag === 'all' ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d] text-[#9ca3af] hover:text-[#e5e7eb]'}">
 						All
 					</button>
-					{#each tags as tag}
+					{#each filteredTags() as tag}
 						<button
 							onclick={() => { selectedTag = tag; loadPrompts(); }}
-							class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors {selectedTag === tag ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d] text-[#9ca3af] hover:text-[#e5e7eb]'}"
-						>
+							class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedTag === tag ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d] text-[#9ca3af] hover:text-[#e5e7eb]'}">
 							{tag}
 						</button>
 					{/each}
