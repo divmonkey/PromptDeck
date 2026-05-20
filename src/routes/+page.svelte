@@ -48,7 +48,7 @@
 </script>
 
 <svelte:head>
-	<title>PromptVault</title>
+	<title>PromptDeck</title>
 </svelte:head>
 
 <div class="min-h-screen bg-[#0f1117]">

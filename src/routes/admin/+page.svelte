@@ -76,7 +76,7 @@
 	onMount(loadPrompts);
 </script>
 
-<svelte:head><title>Admin — PromptVault</title></svelte:head>
+<svelte:head><title>Admin — PromptDeck</title></svelte:head>
 
 <!-- Toast -->
 {#if toast}
@@ -96,7 +96,7 @@
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 					</svg>
 				</div>
-				<h1 class="text-xl font-bold tracking-tight text-[#e5e7eb]">Admin Panel</h1>
+				<h1 class="text-2xl font-condensed font-bold tracking-tight text-[#e5e7eb] uppercase">PromptDeck</h1>
 			</div>
 			<a href="/" class="text-sm text-[#9ca3af] hover:text-[#e5e7eb] transition-colors">← Back to Vault</a>
 		</div>
