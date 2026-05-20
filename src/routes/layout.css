@@ -24,6 +24,7 @@
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 11px 11px;
 }
 
 .prompt-box {
@@ -71,10 +72,10 @@
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 
 .glass-bar {
-  background: rgba(22, 25, 34, 0.55) !important;
+  background: #1e212d54 !important;
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid #f0f8ff3d;
 }
 
 /* Shockwave ripple — expanding ring from click point */

@@ -144,7 +144,7 @@
 					triggerRipple(e);
 					copyPrompt();
 				}}
-				class="ripple-btn absolute top-2 right-2 p-1.5 rounded-md text-[#6b7280] opacity-0 group-hover/prompt:opacity-100 hover:text-[#e5e7eb] transition-all"
+				class="ripple-btn absolute top-2 right-2 p-1.5 rounded-md bg-[#1e212d] border border-[#2a2e3b] text-[#6b7280] opacity-0 group-hover/prompt:opacity-100 hover:text-[#e5e7eb] hover:border-[#6366f1] hover:bg-[#6366f1]/10 transition-all"
 			>
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M8 16H6C4.89543 16 4 15.1046 4 14V6C4 4.89543 4.89543 4 6 4H14C15.1046 4 16 4.89543 16 6V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

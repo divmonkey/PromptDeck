@@ -202,7 +202,7 @@
 				{#each types as t}
 					<button
 						onclick={() => selectType(t.value)}
-						class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedType === t.value ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d] text-[#9ca3af] hover:text-[#e5e7eb]'}">
+						class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedType === t.value ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d54] text-[#9ca3af] hover:text-[#e5e7eb] border border-[#f0f8ff3d]'}">
 						{t.label}
 					</button>
 				{/each}
@@ -221,13 +221,13 @@
 					<span class="text-xs text-[#6b7280] uppercase tracking-wider font-medium whitespace-nowrap shrink-0">Tags</span>
 					<button
 						onclick={() => { selectedTag = 'all'; loadPrompts(); }}
-						class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedTag === 'all' ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d] text-[#9ca3af] hover:text-[#e5e7eb]'}">
+						class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedTag === 'all' ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d54] text-[#9ca3af] hover:text-[#e5e7eb] border border-[#f0f8ff3d]'}">
 						All
 					</button>
 					{#each filteredTags() as tag}
 						<button
 							onclick={() => { selectedTag = tag; loadPrompts(); }}
-							class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedTag === tag ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d] text-[#9ca3af] hover:text-[#e5e7eb]'}">
+							class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedTag === tag ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d54] text-[#9ca3af] hover:text-[#e5e7eb] border border-[#f0f8ff3d]'}">
 							{tag}
 						</button>
 					{/each}
