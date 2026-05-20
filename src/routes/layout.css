@@ -557,16 +557,22 @@
   top: 1rem;
   right: 1rem;
   z-index: 51;
-  padding: 0.5rem;
-  border-radius: 9999px;
-  background: rgba(0, 0, 0, 0.5);
-  color: #ffffff;
-  transition: background 0.2s ease;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 7px;
+  border-radius: 50%;
+  background: #1e212d;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+  transition: all 0.2s ease;
   cursor: pointer;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .image-modal__close:hover {
-  background: rgba(0, 0, 0, 0.8);
+  background: #2a2e3b;
+  color: #ffffff;
 }
 
 .image-modal__img {
