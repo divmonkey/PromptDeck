@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Prompt } from '$lib/types';
-	import { onMount } from 'svelte';
 
 	let { prompt, onCopy, onToast }: { prompt: Prompt; onCopy?: () => void; onToast?: (msg: string, type?: 'success' | 'error' | 'warning' | 'info') => void } = $props();
 
@@ -12,37 +11,55 @@
 		likes = prompt.likes;
 		views = prompt.views;
 	});
+
 	let canLike = $state(true);
 	let timeLeft = $state(0);
+	let likeInterval = $state<ReturnType<typeof setInterval> | null>(null);
 
-	onMount(() => {
-		const lastLiked = localStorage.getItem(`like_${prompt.id}`);
+	// Check localStorage for existing cooldown on mount AND when prompt changes
+	$effect(() => {
+		const id = prompt.id;
+		const lastLiked = localStorage.getItem(`like_${id}`);
 		if (lastLiked) {
 			const diff = Date.now() - parseInt(lastLiked);
 			if (diff < 86400000) {
 				canLike = false;
 				timeLeft = Math.ceil((86400000 - diff) / 1000);
-				const interval = setInterval(() => {
+				if (likeInterval) clearInterval(likeInterval);
+				likeInterval = setInterval(() => {
 					timeLeft--;
 					if (timeLeft <= 0) {
 						canLike = true;
-						clearInterval(interval);
+						if (likeInterval) {
+							clearInterval(likeInterval);
+							likeInterval = null;
+						}
 					}
 				}, 1000);
 			}
 		}
+		return () => {
+			if (likeInterval) {
+				clearInterval(likeInterval);
+				likeInterval = null;
+			}
+		};
 	});
 
-	async function toggleLike() {
+	async function toggleLike(e?: MouseEvent) {
+		if (e) triggerRipple(e);
+
 		if (!canLike) {
 			onToast?.(`You already voted. Wait ${formatTime(timeLeft)} to vote again.`, 'warning');
 			return;
 		}
+
 		const sessionId = crypto.randomUUID();
 		const res = await fetch(`/api/prompts/${prompt.id}/like`, {
 			method: 'POST',
 			headers: { 'x-session-id': sessionId }
 		});
+
 		if (res.ok) {
 			const data = await res.json();
 			likes = data.likes;
@@ -50,13 +67,24 @@
 			onToast?.('Vote recorded!', 'success');
 			localStorage.setItem(`like_${prompt.id}`, Date.now().toString());
 			timeLeft = 86400;
-			const interval = setInterval(() => {
+			if (likeInterval) clearInterval(likeInterval);
+			likeInterval = setInterval(() => {
 				timeLeft--;
 				if (timeLeft <= 0) {
 					canLike = true;
-					clearInterval(interval);
+					if (likeInterval) {
+						clearInterval(likeInterval);
+						likeInterval = null;
+					}
 				}
 			}, 1000);
+		} else {
+			// Server rejected (already voted from another session)
+			const err = await res.json().catch(() => ({ error: 'Vote failed' }));
+			onToast?.(err.error || 'You already voted.', 'warning');
+			canLike = false;
+			localStorage.setItem(`like_${prompt.id}`, Date.now().toString());
+			timeLeft = 86400;
 		}
 	}
 
@@ -158,7 +186,7 @@
 		<div class="card-footer">
 			<button
 				type="button"
-				onclick={toggleLike}
+				onclick={(e) => toggleLike(e)}
 				class="like-btn {canLike ? '' : 'like-btn--disabled'}"
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill={canLike ? 'none' : 'currentColor'} viewBox="0 0 24 24" stroke="currentColor">
