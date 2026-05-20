@@ -10,7 +10,9 @@
 }
 
 .bg-dashboard {
-  background-image: url('/images/bg_dash.png');
+  /* New hero background — swap comments to revert to old bg_dash.png */
+  background-image: url('/images/pd_hero_bg.jpg');
+  /* background-image: url('/images/bg_dash.png'); */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
