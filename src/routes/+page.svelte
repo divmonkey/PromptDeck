@@ -130,38 +130,33 @@
 
 <Toast message={toastMessage} show={toastShow} />
 
-<div class="min-h-screen bg-[#0f1117] bg-dashboard">
+<div class="page-dashboard hero-bg">
 	<!-- Header -->
-	<header class="border-b border-[#2a2e3b]/40 bg-[#0f1117]/60 backdrop-blur-md sticky top-0 z-40">
+	<header class="site-header">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 			<div class="flex items-center justify-between gap-4">
 				<div class="flex items-center gap-3">
-					<div class="w-9 h-9 rounded-lg bg-[#6366f1] flex items-center justify-center">
-						<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<div class="brand-logo">
+						<svg xmlns="http://www.w3.org/2000/svg" class="brand-logo__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
 						</svg>
 					</div>
-					<h1 class="text-2xl font-condensed font-bold tracking-tight text-[#e5e7eb] uppercase">PromptDeck</h1>
+					<h1 class="brand-name">PromptDeck</h1>
 				</div>
 
-				<div class="flex-1 max-w-xl hidden sm:block">
-					<div class="relative">
-						<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-						</svg>
-						<input
-							bind:value={search}
-							oninput={() => loadPrompts()}
-							placeholder="Search prompts..."
-							class="w-full bg-transparent border-0 rounded-lg pl-10 pr-4 py-2 text-sm text-[#e5e7eb] placeholder-[#6b7280] focus:outline-none caret-[#a300ff]"
-						/>
-					</div>
+				<div class="search-wrap hidden sm:block">
+					<svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+					</svg>
+					<input
+						bind:value={search}
+						oninput={() => loadPrompts()}
+						placeholder="Search prompts..."
+						class="search-input"
+					/>
 				</div>
 
-				<a
-					href="/admin"
-					class="login-btn flex items-center gap-2 px-4 py-2 bg-[#a300ff] text-white text-sm font-medium rounded-lg transition-colors"
-				>
+				<a href="/admin" class="login-btn login-btn--fancy">
 					<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
 					</svg>
@@ -170,18 +165,16 @@
 			</div>
 
 			<!-- Mobile search -->
-			<div class="mt-3 sm:hidden">
-				<div class="relative">
-					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-					</svg>
-					<input
-						bind:value={search}
-						oninput={() => loadPrompts()}
-						placeholder="Search prompts..."
-						class="w-full bg-transparent border-0 rounded-lg pl-10 pr-4 py-2 text-sm text-[#e5e7eb] placeholder-[#6b7280] focus:outline-none caret-[#a300ff]"
-					/>
-				</div>
+			<div class="search-wrap search-wrap--mobile sm:hidden">
+				<svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+				</svg>
+				<input
+					bind:value={search}
+					oninput={() => loadPrompts()}
+					placeholder="Search prompts..."
+					class="search-input"
+				/>
 			</div>
 		</div>
 	</header>
@@ -192,17 +185,17 @@
 			<!-- Type row -->
 			<div
 				bind:this={typeRow}
-				class="flex items-center gap-3 overflow-hidden cursor-grab select-none"
+				class="filter-row scrollbar-hide"
 				onmousedown={(e) => startDrag(e, typeRow!)}
 				ontouchstart={(e) => startDrag(e, typeRow!)}
 				role="region"
 				aria-label="Type filter"
 			>
-				<span class="text-xs text-[#6b7280] uppercase tracking-wider font-medium whitespace-nowrap shrink-0">Type</span>
+				<span class="filter-label">Type</span>
 				{#each types as t}
 					<button
 						onclick={() => selectType(t.value)}
-						class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedType === t.value ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d54] text-[#9ca3af] hover:text-[#e5e7eb] border border-[#f0f8ff3d]'}">
+						class="filter-pill {selectedType === t.value ? 'filter-pill--active' : ''}">
 						{t.label}
 					</button>
 				{/each}
@@ -212,22 +205,22 @@
 			{#if filteredTags().length > 0}
 				<div
 					bind:this={tagRow}
-					class="flex items-center gap-3 mt-2 overflow-hidden cursor-grab select-none"
+					class="filter-row mt-2 scrollbar-hide"
 					onmousedown={(e) => startDrag(e, tagRow!)}
 					ontouchstart={(e) => startDrag(e, tagRow!)}
 					role="region"
 					aria-label="Tag filter"
 				>
-					<span class="text-xs text-[#6b7280] uppercase tracking-wider font-medium whitespace-nowrap shrink-0">Tags</span>
+					<span class="filter-label">Tags</span>
 					<button
 						onclick={() => { selectedTag = 'all'; loadPrompts(); }}
-						class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedTag === 'all' ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d54] text-[#9ca3af] hover:text-[#e5e7eb] border border-[#f0f8ff3d]'}">
+						class="filter-pill {selectedTag === 'all' ? 'filter-pill--active' : ''}">
 						All
 					</button>
 					{#each filteredTags() as tag}
 						<button
 							onclick={() => { selectedTag = tag; loadPrompts(); }}
-							class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 {selectedTag === tag ? 'bg-[#6366f1] text-white' : 'bg-[#1e212d54] text-[#9ca3af] hover:text-[#e5e7eb] border border-[#f0f8ff3d]'}">
+							class="filter-pill {selectedTag === tag ? 'filter-pill--active' : ''}">
 							{tag}
 						</button>
 					{/each}
@@ -240,12 +233,12 @@
 	<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 		{#if loading}
 			<div class="flex items-center justify-center py-20">
-				<div class="w-8 h-8 border-2 border-[#6366f1] border-t-transparent rounded-full animate-spin"></div>
+				<div class="spinner"></div>
 			</div>
 		{:else}
 			<div class="mb-4 flex items-center justify-between">
-				<p class="text-sm text-[#6b7280]">
-					<span class="font-condensed text-lg text-[#e5e7eb]">{prompts.length}</span> prompt{prompts.length === 1 ? '' : 's'}
+				<p class="results-count">
+					<span class="results-count__number">{prompts.length}</span> prompt{prompts.length === 1 ? '' : 's'}
 				</p>
 			</div>
 			<PromptGrid {prompts} onCopy={() => showToast('Prompt copied to clipboard')} />

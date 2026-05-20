@@ -91,16 +91,16 @@
 </script>
 
 {#if showFull}
-	<button type="button" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md cursor-default" onclick={() => (showFull = false)} onkeydown={(e) => e.key === 'Escape' && (showFull = false)}>
-		<img src={prompt.imageUrl} alt={prompt.title} class="max-h-[90vh] rounded-lg pointer-events-none" />
+	<button type="button" class="image-modal" onclick={() => (showFull = false)} onkeydown={(e) => e.key === 'Escape' && (showFull = false)}>
+		<img src={prompt.imageUrl} alt={prompt.title} class="image-modal__img" />
 	</button>
 {/if}
 
-<div class="prompt-card flex flex-col h-full">
+<div class="prompt-card">
 	{#if prompt.imageUrl}
-		<div class="aspect-[4/3] w-full overflow-hidden bg-[#1e212d] relative group flex-shrink-0">
-			<img src={prompt.imageUrl} alt={prompt.title} class="w-full h-full object-cover" />
-			<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+		<div class="card-image-wrap">
+			<img src={prompt.imageUrl} alt={prompt.title} class="card-image-wrap__img" />
+			<div class="card-image-wrap__overlay">
 				<button
 					type="button"
 					aria-label="View full image"
@@ -109,7 +109,7 @@
 						showFull = true;
 						incrementView();
 					}}
-					class="ripple-btn p-2 bg-white/20 rounded-full hover:bg-white/40 transition-colors"
+					class="overlay-btn ripple-btn"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -123,7 +123,7 @@
 						triggerRipple(e);
 						copyPrompt();
 					}}
-					class="ripple-btn p-2 bg-white/20 rounded-full hover:bg-white/40 transition-colors"
+					class="overlay-btn ripple-btn"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
@@ -133,11 +133,11 @@
 		</div>
 	{/if}
 
-	<div class="p-4 flex flex-col flex-grow">
-		<h3 class="font-bold text-[#e5e7eb] mb-2 truncate">{prompt.title}</h3>
-		<div class="prompt-box border border-[#2a2e3b] rounded-lg p-3 text-xs text-[#9ca3af] mb-4 flex-grow font-mono relative group/prompt">
+	<div class="card-body">
+		<h3 class="card-title">{prompt.title}</h3>
+		<div class="prompt-box">
 			<div class="flex justify-between items-start gap-2">
-				<p class="line-clamp-4">{prompt.prompt || prompt.content || 'No prompt content.'}</p>
+				<p class="prompt-box__text">{prompt.prompt || prompt.content || 'No prompt content.'}</p>
 				<button
 					type="button"
 					aria-label="Copy prompt"
@@ -145,7 +145,7 @@
 						triggerRipple(e);
 						copyPrompt();
 					}}
-					class="ripple-btn shrink-0 p-1.5 rounded-md bg-[#1e212d] border border-[#2a2e3b] text-[#6b7280] opacity-0 group-hover/prompt:opacity-100 hover:text-[#e5e7eb] hover:border-[#6366f1] hover:bg-[#6366f1]/10 transition-all"
+					class="copy-btn ripple-btn"
 				>
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M8 16H6C4.89543 16 4 15.1046 4 14V6C4 4.89543 4.89543 4 6 4H14C15.1046 4 16 4.89543 16 6V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -154,18 +154,18 @@
 				</button>
 			</div>
 		</div>
-		<div class="flex items-center justify-between pt-4 border-t border-[#2a2e3b]/50 mt-auto">
+		<div class="card-footer">
 			<button
 				onclick={toggleLike}
-				class="flex items-center gap-1 transition-colors {canLike ? 'text-[#6b7280] hover:text-[#6366f1]' : 'text-[#4b5563] cursor-not-allowed'}"
+				class="like-btn {canLike ? '' : 'like-btn--disabled'}"
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill={canLike ? 'none' : 'currentColor'} viewBox="0 0 24 24" stroke="currentColor">
 					<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
 				</svg>
-				<span class="font-condensed text-sm">{likes}</span>
-				{#if !canLike}<span class="text-[10px] ml-1">{formatTime(timeLeft)}</span>{/if}
+				<span class="like-count">{likes}</span>
+				{#if !canLike}<span class="like-cooldown">{formatTime(timeLeft)}</span>{/if}
 			</button>
-			<span class="text-xs text-[#6b7280]"><span class="font-condensed">{views}</span> views</span>
+			<span class="view-count"><span class="view-count__number">{views}</span> views</span>
 		</div>
 	</div>
 </div>
