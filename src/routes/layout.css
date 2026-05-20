@@ -31,6 +31,9 @@
 
 .prompt-box {
   background: #0a070e36;
+  border-color: #2a2e3b00 !important;
+  margin-top: 7px;
+  margin-bottom: 20px;
 }
 .prompt-card::before {
   content: '';
