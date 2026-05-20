@@ -228,7 +228,7 @@
 					<span class="results-count__number">{prompts.length}</span> prompt{prompts.length === 1 ? '' : 's'}
 				</p>
 			</div>
-			<PromptGrid {prompts} onCopy={() => showToast('Prompt copied to clipboard')} onToast={(msg) => showToast(msg)} />
+			<PromptGrid {prompts} onCopy={() => showToast('Prompt copied to clipboard')} onToast={(msg, type) => showToast(msg, type ?? 'success')} />
 		{/if}
 	</main>
 </div>

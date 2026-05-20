@@ -2,7 +2,7 @@
 	import PromptCard from './PromptCard.svelte';
 	import type { Prompt } from '$lib/types';
 
-	let { prompts, onCopy, onToast }: { prompts: Prompt[]; onCopy?: () => void; onToast?: (msg: string) => void } = $props();
+	let { prompts, onCopy, onToast }: { prompts: Prompt[]; onCopy?: () => void; onToast?: (msg: string, type?: 'success' | 'error' | 'warning' | 'info') => void } = $props();
 </script>
 
 <div class="prompt-grid">

@@ -2,7 +2,7 @@
 	import type { Prompt } from '$lib/types';
 	import { onMount } from 'svelte';
 
-	let { prompt, onCopy, onToast }: { prompt: Prompt; onCopy?: () => void; onToast?: (msg: string) => void } = $props();
+	let { prompt, onCopy, onToast }: { prompt: Prompt; onCopy?: () => void; onToast?: (msg: string, type?: 'success' | 'error' | 'warning' | 'info') => void } = $props();
 
 	let showFull = $state(false);
 	let likes = $state(0);
@@ -35,7 +35,7 @@
 
 	async function toggleLike() {
 		if (!canLike) {
-			onToast?.(`You already voted. Wait ${formatTime(timeLeft)} to vote again.`);
+			onToast?.(`You already voted. Wait ${formatTime(timeLeft)} to vote again.`, 'warning');
 			return;
 		}
 		const sessionId = crypto.randomUUID();
@@ -47,6 +47,7 @@
 			const data = await res.json();
 			likes = data.likes;
 			canLike = false;
+			onToast?.('Vote recorded!', 'success');
 			localStorage.setItem(`like_${prompt.id}`, Date.now().toString());
 			timeLeft = 86400;
 			const interval = setInterval(() => {
@@ -156,6 +157,7 @@
 		</div>
 		<div class="card-footer">
 			<button
+				type="button"
 				onclick={toggleLike}
 				class="like-btn {canLike ? '' : 'like-btn--disabled'}"
 			>
