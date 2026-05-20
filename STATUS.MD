@@ -1,9 +1,9 @@
 # Project Status
 
 ## Working Checkpoint (2026-05-20)
-**Revert to commit `6a17c00` if builds break.**
+**Revert to commit `c26b5fe` if builds break.**
 
-Last known good commit: `6a17c00 refactor: semantic CSS design system for AI-friendly class names`
+Last known good commit: `c26b5fe docs: update CONTEXT, STATUS, RULES, WORKFLOW to reflect current state`
 
 ### What's Working
 - SvelteKit + Vite scaffold with Tailwind CSS v4
