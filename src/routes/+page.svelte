@@ -144,23 +144,23 @@
 					<h1 class="text-2xl font-condensed font-bold tracking-tight text-[#e5e7eb] uppercase">PromptDeck</h1>
 				</div>
 
-				<div class="flex-1 max-w-md hidden sm:block">
+				<div class="flex-1 max-w-xl hidden sm:block">
 					<div class="relative">
-						<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
 						</svg>
 						<input
 							bind:value={search}
 							oninput={() => loadPrompts()}
 							placeholder="Search prompts..."
-							class="w-full bg-[#161922] border border-[#2a2e3b] rounded-lg pl-10 pr-4 py-2 text-sm text-[#e5e7eb] placeholder-[#6b7280] focus:outline-none focus:border-[#6366f1] transition-colors"
+							class="w-full bg-transparent border-0 rounded-lg pl-10 pr-4 py-2 text-sm text-[#e5e7eb] placeholder-[#6b7280] focus:outline-none caret-[#a300ff]"
 						/>
 					</div>
 				</div>
 
 				<a
 					href="/admin"
-					class="flex items-center gap-2 px-4 py-2 bg-[#6366f1] text-white text-sm font-medium rounded-lg hover:bg-[#4f46e5] transition-colors"
+					class="login-btn flex items-center gap-2 px-4 py-2 bg-[#a300ff] text-white text-sm font-medium rounded-lg transition-colors"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
@@ -172,14 +172,14 @@
 			<!-- Mobile search -->
 			<div class="mt-3 sm:hidden">
 				<div class="relative">
-					<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
 					</svg>
 					<input
 						bind:value={search}
 						oninput={() => loadPrompts()}
 						placeholder="Search prompts..."
-						class="w-full bg-[#161922] border border-[#2a2e3b] rounded-lg pl-10 pr-4 py-2 text-sm text-[#e5e7eb] placeholder-[#6b7280] focus:outline-none focus:border-[#6366f1]"
+						class="w-full bg-transparent border-0 rounded-lg pl-10 pr-4 py-2 text-sm text-[#e5e7eb] placeholder-[#6b7280] focus:outline-none caret-[#a300ff]"
 					/>
 				</div>
 			</div>

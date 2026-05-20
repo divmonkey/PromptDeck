@@ -25,6 +25,10 @@
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
+
+.prompt-box {
+  background: #0a070e36;
+}
 .prompt-card::before {
   content: '';
   position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
@@ -33,6 +37,23 @@
   mask-composite: exclude; opacity: 0; transition: opacity 0.4s ease;
 }
 .prompt-card:hover::before { opacity: 1; }
+
+/* Login button — same gradient border hover, no fill bg */
+.login-btn {
+  position: relative;
+  background: transparent;
+  border-radius: 0.5rem;
+  z-index: 1;
+}
+.login-btn::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
+  background: linear-gradient(0deg, #6366f1, #3b82f6, #06b6d4, transparent 50%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude; opacity: 0; transition: opacity 0.4s ease;
+  z-index: -1;
+}
+.login-btn:hover::before { opacity: 1; }
 
 .prompt-grid {
   display: grid;
