@@ -2,7 +2,7 @@
 	import type { Prompt } from '$lib/types';
 	import { onMount } from 'svelte';
 
-	let { prompt, onCopy }: { prompt: Prompt; onCopy?: () => void } = $props();
+	let { prompt, onCopy, onToast }: { prompt: Prompt; onCopy?: () => void; onToast?: (msg: string) => void } = $props();
 
 	let showFull = $state(false);
 	let likes = $state(0);
@@ -34,7 +34,10 @@
 	});
 
 	async function toggleLike() {
-		if (!canLike) return;
+		if (!canLike) {
+			onToast?.(`You already voted. Wait ${formatTime(timeLeft)} to vote again.`);
+			return;
+		}
 		const sessionId = crypto.randomUUID();
 		const res = await fetch(`/api/prompts/${prompt.id}/like`, {
 			method: 'POST',
@@ -91,9 +94,19 @@
 </script>
 
 {#if showFull}
-	<button type="button" class="image-modal" onclick={() => (showFull = false)} onkeydown={(e) => e.key === 'Escape' && (showFull = false)}>
+	<div class="image-modal">
+		<button
+			type="button"
+			aria-label="Close"
+			class="image-modal__close"
+			onclick={() => (showFull = false)}
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+			</svg>
+		</button>
 		<img src={prompt.imageUrl} alt={prompt.title} class="image-modal__img" />
-	</button>
+	</div>
 {/if}
 
 <div class="prompt-card">
