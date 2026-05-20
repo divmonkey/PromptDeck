@@ -136,21 +136,23 @@
 	<div class="p-4 flex flex-col flex-grow">
 		<h3 class="font-bold text-[#e5e7eb] mb-2 truncate">{prompt.title}</h3>
 		<div class="prompt-box border border-[#2a2e3b] rounded-lg p-3 text-xs text-[#9ca3af] mb-4 flex-grow font-mono relative group/prompt">
-			<p class="line-clamp-4 pr-7">{prompt.prompt || prompt.content || 'No prompt content.'}</p>
-			<button
-				type="button"
-				aria-label="Copy prompt"
-				onclick={(e) => {
-					triggerRipple(e);
-					copyPrompt();
-				}}
-				class="ripple-btn absolute top-2 right-2 p-1.5 rounded-md bg-[#1e212d] border border-[#2a2e3b] text-[#6b7280] opacity-0 group-hover/prompt:opacity-100 hover:text-[#e5e7eb] hover:border-[#6366f1] hover:bg-[#6366f1]/10 transition-all"
-			>
-				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M8 16H6C4.89543 16 4 15.1046 4 14V6C4 4.89543 4.89543 4 6 4H14C15.1046 4 16 4.89543 16 6V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					<path d="M10 20H18C19.1046 20 20 19.1046 20 18V10C20 8.89543 19.1046 8 18 8H10C8.89543 8 8 8.89543 8 10V18C8 19.1046 8.89543 20 10 20Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</button>
+			<div class="flex justify-between items-start gap-2">
+				<p class="line-clamp-4">{prompt.prompt || prompt.content || 'No prompt content.'}</p>
+				<button
+					type="button"
+					aria-label="Copy prompt"
+					onclick={(e) => {
+						triggerRipple(e);
+						copyPrompt();
+					}}
+					class="ripple-btn shrink-0 p-1.5 rounded-md bg-[#1e212d] border border-[#2a2e3b] text-[#6b7280] opacity-0 group-hover/prompt:opacity-100 hover:text-[#e5e7eb] hover:border-[#6366f1] hover:bg-[#6366f1]/10 transition-all"
+				>
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M8 16H6C4.89543 16 4 15.1046 4 14V6C4 4.89543 4.89543 4 6 4H14C15.1046 4 16 4.89543 16 6V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M10 20H18C19.1046 20 20 19.1046 20 18V10C20 8.89543 19.1046 8 18 8H10C8.89543 8 8 8.89543 8 10V18C8 19.1046 8.89543 20 10 20Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</button>
+			</div>
 		</div>
 		<div class="flex items-center justify-between pt-4 border-t border-[#2a2e3b]/50 mt-auto">
 			<button
