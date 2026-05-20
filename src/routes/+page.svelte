@@ -62,7 +62,7 @@
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
 						</svg>
 					</div>
-					<h1 class="text-xl font-bold tracking-tight text-[#e5e7eb]">PromptVault</h1>
+					<h1 class="text-2xl font-condensed font-bold tracking-tight text-[#e5e7eb] uppercase">PromptDeck</h1>
 				</div>
 
 				<div class="flex-1 max-w-md hidden sm:block">
