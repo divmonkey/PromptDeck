@@ -6,62 +6,31 @@ This document tracks the current status and immediate next steps for the project
 - **Core Dependencies Installed:** `npm` packages and `Playwright` are installed.
 - **UI/UX Skill Integrated:** The `ui-ux-pro-max-skill` has been successfully cloned into the `skill/` directory.
 - **Initial Documentation Created:** `WORKFLOW.MD`, `RULES.MD`, and `CONTEXT.MD` have been generated.
-
-## Immediate Next Steps (PromptDeck Architecture)
-1.  **Restructure `public/` Directory:**
-    *   Create `/public/images/`, `/public/css/`, `/public/js/`.
-    *   Move `public/style.css` to `/public/css/style.css`.
-    *   Move `public/app.js` to `/public/js/app.js`.
-    *   Update `public/index.html` to reflect new asset paths.
-2.  **Initialize Git Repository:**
-    *   Initialize a new Git repository.
-    *   Set the remote to `https://github.com/divmonkey/PromptDeck`.
-    *   Perform initial commit of existing files.
-3.  **Scaffold Svelte Project with Vite:**
-    *   Use `npx create-svelte@latest` to create a new Svelte project within the root directory.
-    *   Configure Vite for the project.
-4.  **Integrate Tailwind CSS:**
-    *   Install Tailwind CSS and its dependencies.
-    *   Configure `tailwind.config.js` and `postcss.config.js`.
-    *   Include Tailwind directives in the main CSS.
-5.  **Configure Condensed Font:**
-    *   Research and apply a suitable condensed font for numbers/accents using Tailwind CSS configuration.
-6.  **Clean URLs:**
-    *   Configure SvelteKit routing (handled by `create-svelte`) to enable clean URLs (no `.html` extension).
-7.  **Backend Setup (SQLite, Local File System):**
-    *   Begin planning for SQLite and local file system integration, likely within `server.js` or a new backend service.
-    *   Consider how the existing `server.js` interacts with the new Svelte frontend.
-8.  **Asset Strategy:**
-    *   For images, consider using Unsplash.
-    *   For icons, use Heroicons or `https://www.svgrepo.com/svg/`.
-
-## Open Questions / Pending Decisions
-- How should the `uploads/` directory be handled within the new frontend/backend architecture? Should it be served directly or via a backend route?
-- Specific data models or API endpoints required for the dashboard.
-- Detailed design preferences for the "good looking dashboard."
+- **SvelteKit + Vite Scaffolded:** Project uses SvelteKit with Vite, Tailwind CSS v4.
+- **SQLite Backend:** Replaced MongoDB with `better-sqlite3`. All API routes migrated.
+- **Dashboard Built:** Main page with search, type/tag filters, prompt grid, create modal.
+- **Condensed Font:** Oswald font configured for numbers/accents.
 
 ## Completed Tasks
 - Installed `npm` dependencies.
 - Installed `Playwright`.
 - Created `/skill/` directory.
 - Cloned `ui-ux-pro-max-skill` into `/skill/ui-ux-pro-max-skill`.
-- Created `WORKFLOW.MD`.
-- Created `RULES.MD`.
-- Created `CONTEXT.MD`.
+- Created `WORKFLOW.MD`, `RULES.MD`, `CONTEXT.MD`.
 - Restructured `public/` directory (created `images`, `css`, `js`, moved assets).
 - Updated `public/index.html` asset paths.
 - Initialized Git repository and performed first commit.
+- **Scaffolded SvelteKit + Vite** (existing project already had this).
+- **Integrated Tailwind CSS v4** with custom theme (background, surface, accent, condensed font).
+- **Configured Oswald condensed font** via Google Fonts + CSS custom property.
+- **Replaced MongoDB with SQLite** (`better-sqlite3`) — all CRUD, like, view, import APIs.
+- **Built dashboard UI** — header, search, type/tag filters, responsive prompt grid, create modal.
+- **All API routes working** — `/api/prompts`, `/api/tags`, `/api/prompts/[id]`, `/api/prompts/[id]/like`, `/api/prompts/[id]/view`, `/api/import`.
 
 ## Pending Tasks
 - **Git Push to GitHub:** The initial push to `https://github.com/divmonkey/PromptDeck` failed. This needs to be verified (repository existence, access rights) and retried.
+- **Production Adapter:** Currently using `@sveltejs/adapter-auto`. For a Node.js server, consider switching to `@sveltejs/adapter-node` or keep `adapter-auto` if deploying to a supported platform.
 
 ## Next Immediate Steps
-1.  **Scaffold Svelte Project with Vite:**
-    *   Use `npx create-svelte@latest` to create a new Svelte project within the root directory.
-    *   Configure Vite for the project.
-2.  **Integrate Tailwind CSS:**
-    *   Install Tailwind CSS and its dependencies.
-    *   Configure `tailwind.config.js` and `postcss.config.js`.
-    *   Include Tailwind directives in the main CSS.
-3.  **Configure Condensed Font:**
-    *   Research and apply a suitable condensed font for numbers/accents using Tailwind CSS configuration.
+1. Verify GitHub repo exists and push.
+2. Test the dev server to confirm everything works end-to-end.

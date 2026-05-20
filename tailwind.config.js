@@ -1,0 +1,1 @@
+// Tailwind v4 uses CSS for configuration.
