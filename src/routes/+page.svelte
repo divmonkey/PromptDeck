@@ -128,11 +128,7 @@
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 			<div class="flex items-center justify-between gap-4">
 				<div class="flex items-center gap-3">
-					<div class="brand-logo">
-						<svg xmlns="http://www.w3.org/2000/svg" class="brand-logo__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-						</svg>
-					</div>
+					<img src="/images/PromptDeck.png" alt="PromptDeck" class="brand-logo-img" />
 					<h1 class="brand-name">PromptDeck</h1>
 				</div>
 
