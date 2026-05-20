@@ -130,9 +130,9 @@
 
 <Toast message={toastMessage} show={toastShow} />
 
-<div class="min-h-screen bg-[#0f1117]">
+<div class="min-h-screen bg-[#0f1117] bg-dashboard">
 	<!-- Header -->
-	<header class="border-b border-[#2a2e3b] bg-[#0f1117]/80 backdrop-blur-md sticky top-0 z-40">
+	<header class="border-b border-[#2a2e3b]/40 bg-[#0f1117]/60 backdrop-blur-md sticky top-0 z-40">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 			<div class="flex items-center justify-between gap-4">
 				<div class="flex items-center gap-3">
@@ -187,7 +187,7 @@
 	</header>
 
 	<!-- Filters -->
-	<div class="border-b border-[#2a2e3b] bg-[#161922]">
+	<div class="glass-bar">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
 			<!-- Type row -->
 			<div

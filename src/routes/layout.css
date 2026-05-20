@@ -9,11 +9,21 @@
   /* ... */
 }
 
+.bg-dashboard {
+  background-image: url('/images/bg_dash.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
 .prompt-card {
   position: relative;
-  background: #161922;
+  background: rgba(22, 25, 34, 0.55);
   border-radius: 0.75rem;
   overflow: hidden;
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 .prompt-card::before {
   content: '';
@@ -38,6 +48,13 @@
 
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+.glass-bar {
+  background: rgba(22, 25, 34, 0.55) !important;
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
 
 /* Shockwave ripple — expanding ring from click point */
 .ripple-btn {
