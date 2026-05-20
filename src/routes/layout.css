@@ -44,12 +44,39 @@ body {
   border: 1px solid var(--color-border);
   border-radius: 0.75rem;
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  transition: border-color 0.3s ease;
 }
 
-.prompt-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+.prompt-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 0.85rem;
+  padding: 1.5px;
+  background: linear-gradient(0deg, transparent 0%, transparent 40%, #8b5cf6 50%, #3b82f6 60%, #06b6d4 70%, transparent 80%, transparent 100%);
+  background-size: 100% 250%;
+  background-position: 0% 100%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.prompt-card:hover::before {
+  opacity: 1;
+  animation: shimmer-border 1.2s ease-out forwards;
+}
+
+@keyframes shimmer-border {
+  0% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }
 
 .font-condensed {
