@@ -2,12 +2,12 @@
 	import PromptCard from './PromptCard.svelte';
 	import type { Prompt } from '$lib/types';
 
-	let { prompts }: { prompts: Prompt[] } = $props();
+	let { prompts, onCopy }: { prompts: Prompt[]; onCopy?: () => void } = $props();
 </script>
 
 <div class="prompt-grid">
 	{#each prompts as prompt (prompt.id)}
-		<PromptCard {prompt} />
+		<PromptCard {prompt} {onCopy} />
 	{:else}
 		<div class="col-span-full py-20 flex flex-col items-center justify-center text-[#6b7280] gap-4">
 			<svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">

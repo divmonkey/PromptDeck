@@ -2,7 +2,7 @@
 	import type { Prompt } from '$lib/types';
 	import { onMount } from 'svelte';
 
-	let { prompt }: { prompt: Prompt } = $props();
+	let { prompt, onCopy }: { prompt: Prompt; onCopy?: () => void } = $props();
 
 	let showFull = $state(false);
 	let likes = $state(0);
@@ -66,6 +66,20 @@
 
 	function copyPrompt() {
 		navigator.clipboard.writeText(prompt.prompt || prompt.content || '');
+		onCopy?.();
+	}
+
+	function triggerRipple(e: MouseEvent) {
+		const btn = e.currentTarget as HTMLButtonElement;
+		const rect = btn.getBoundingClientRect();
+		const size = Math.max(rect.width, rect.height);
+		const ring = document.createElement('span');
+		ring.className = 'ripple-ring';
+		ring.style.width = ring.style.height = `${size}px`;
+		ring.style.left = `${e.clientX - rect.left - size / 2}px`;
+		ring.style.top = `${e.clientY - rect.top - size / 2}px`;
+		btn.appendChild(ring);
+		setTimeout(() => ring.remove(), 600);
 	}
 
 	function formatTime(s: number) {
@@ -90,18 +104,27 @@
 				<button
 					type="button"
 					aria-label="View full image"
-					onclick={() => {
+					onclick={(e) => {
+						triggerRipple(e);
 						showFull = true;
 						incrementView();
 					}}
-					class="p-2 bg-white/20 rounded-full hover:bg-white/40 transition-colors"
+					class="ripple-btn p-2 bg-white/20 rounded-full hover:bg-white/40 transition-colors"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
 					</svg>
 				</button>
-				<button type="button" aria-label="Copy prompt" onclick={copyPrompt} class="p-2 bg-white/20 rounded-full hover:bg-white/40 transition-colors">
+				<button
+					type="button"
+					aria-label="Copy prompt"
+					onclick={(e) => {
+						triggerRipple(e);
+						copyPrompt();
+					}}
+					class="ripple-btn p-2 bg-white/20 rounded-full hover:bg-white/40 transition-colors"
+				>
 					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
 					</svg>
@@ -117,8 +140,11 @@
 			<button
 				type="button"
 				aria-label="Copy prompt"
-				onclick={copyPrompt}
-				class="absolute top-2 right-2 p-1.5 rounded-md bg-[#1e212d] border border-[#2a2e3b] text-[#6b7280] opacity-0 group-hover/prompt:opacity-100 hover:text-[#e5e7eb] hover:border-[#6366f1] hover:bg-[#6366f1]/10 transition-all"
+				onclick={(e) => {
+					triggerRipple(e);
+					copyPrompt();
+				}}
+				class="ripple-btn absolute top-2 right-2 p-1.5 rounded-md bg-[#1e212d] border border-[#2a2e3b] text-[#6b7280] opacity-0 group-hover/prompt:opacity-100 hover:text-[#e5e7eb] hover:border-[#6366f1] hover:bg-[#6366f1]/10 transition-all"
 			>
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M8 16H6C4.89543 16 4 15.1046 4 14V6C4 4.89543 4.89543 4 6 4H14C15.1046 4 16 4.89543 16 6V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

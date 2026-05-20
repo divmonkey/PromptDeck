@@ -2,14 +2,26 @@
 
 This document tracks the current status and immediate next steps for the project.
 
-## Current State
-- **Core Dependencies Installed:** `npm` packages and `Playwright` are installed.
-- **UI/UX Skill Integrated:** The `ui-ux-pro-max-skill` has been successfully cloned into the `skill/` directory.
-- **Initial Documentation Created:** `WORKFLOW.MD`, `RULES.MD`, and `CONTEXT.MD` have been generated.
-- **SvelteKit + Vite Scaffolded:** Project uses SvelteKit with Vite, Tailwind CSS v4.
-- **SQLite Backend:** Replaced MongoDB with `better-sqlite3`. All API routes migrated.
-- **Dashboard Built:** Main page with search, type/tag filters, prompt grid, create modal.
-- **Condensed Font:** Oswald font configured for numbers/accents.
+## Working Checkpoint (2026-05-20)
+**This is a known-good state. If builds break, revert to commit `618b140`.**
+
+Last known good commit: `618b140 feat: drag-scroll filters, tags filtered by selected type`
+
+### What's Working
+- SvelteKit + Vite scaffold with Tailwind CSS v4
+- SQLite backend (`better-sqlite3`) with `prompts` and `likes` tables
+- Dashboard with search, drag-scroll type/tag filters (no scrollbar), dynamic tag filtering by selected type
+- Admin panel (`/admin`) with full CRUD
+- 6 demo prompt cards seeded
+- Card gradient border hover animation (purple→blue→cyan)
+- Clipboard copy icon in prompt box (hover-appearing)
+- Like cooldown (24h), view increment, fullscreen image view
+- Rebrand: PromptVault → PromptDeck (Oswald condensed font)
+- Uploads served from `static/uploads/`
+
+### Active Issues (Non-Blocking)
+- Svelte accessibility warnings: `PromptModal.svelte` div with click handler
+- `npm run build` warnings: `@import` rule ordering in CSS
 
 ## Completed Tasks
 - Installed `npm` dependencies.
@@ -26,11 +38,17 @@ This document tracks the current status and immediate next steps for the project
 - **Replaced MongoDB with SQLite** (`better-sqlite3`) — all CRUD, like, view, import APIs.
 - **Built dashboard UI** — header, search, type/tag filters, responsive prompt grid, create modal.
 - **All API routes working** — `/api/prompts`, `/api/tags`, `/api/prompts/[id]`, `/api/prompts/[id]/like`, `/api/prompts/[id]/view`, `/api/import`.
+- **Rebrand PromptVault → PromptDeck** with bold condensed uppercase Oswald font.
+- **Card gradient border hover animation** (purple→blue→cyan).
+- **6 demo prompt cards** seeded in DB.
+- **Clipboard copy icon** in prompt box (hover-appearing).
+- **Fixed uploads path** (`public/` → `static/`).
+- **Drag-scroll filters** (no scrollbar) with mouse + touch support.
+- **Tags filtered by selected type** dynamically.
 
 ## Pending Tasks
-- **Git Push to GitHub:** The initial push to `https://github.com/divmonkey/PromptDeck` failed. This needs to be verified (repository existence, access rights) and retried.
 - **Production Adapter:** Currently using `@sveltejs/adapter-auto`. For a Node.js server, consider switching to `@sveltejs/adapter-node` or keep `adapter-auto` if deploying to a supported platform.
 
 ## Next Immediate Steps
-1. Verify GitHub repo exists and push.
-2. Test the dev server to confirm everything works end-to-end.
+1. Add shockwave click animation to image overlay buttons (view full, copy).
+2. Add toast notification on clipboard copy.

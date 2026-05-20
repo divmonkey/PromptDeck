@@ -24,6 +24,7 @@ Carefully read and understand the user's request. Identify the core task, any co
 
 ## 5. Document (as needed)
 - Update `WORKFLOW.MD`, `RULES.MD`, `CONTEXT.MD`, or `STATUS.MD` if there are significant changes to processes, rules, project context, or status.
+- **Working State:** When the user explicitly says "note this current state as working", update `STATUS.MD` with the current commit hash and a summary of what's working. This becomes the revert checkpoint.
 
 ## 6. Finalize
 - Once all steps are complete and verified, consider the task done and await further instructions.

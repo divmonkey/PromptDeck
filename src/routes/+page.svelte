@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import PromptGrid from '$lib/components/PromptGrid.svelte';
 	import PromptModal from '$lib/components/PromptModal.svelte';
+	import Toast from '$lib/components/Toast.svelte';
 	import type { Prompt } from '$lib/types';
 
 	let prompts = $state<Prompt[]>([]);
@@ -12,6 +13,20 @@
 	let selectedTag = $state('all');
 	let showModal = $state(false);
 	let loading = $state(true);
+
+	// Toast state
+	let toastMessage = $state('');
+	let toastShow = $state(false);
+	let toastTimer: ReturnType<typeof setTimeout> | null = null;
+
+	function showToast(message: string) {
+		toastMessage = message;
+		toastShow = true;
+		if (toastTimer) clearTimeout(toastTimer);
+		toastTimer = setTimeout(() => {
+			toastShow = false;
+		}, 2000);
+	}
 
 	// Drag-scroll refs
 	let typeRow: HTMLDivElement | null = $state(null);
@@ -112,6 +127,8 @@
 </svelte:head>
 
 <svelte:window onmouseup={endDrag} onmousemove={doDrag} ontouchend={endDrag} ontouchmove={doDrag} />
+
+<Toast message={toastMessage} show={toastShow} />
 
 <div class="min-h-screen bg-[#0f1117]">
 	<!-- Header -->
@@ -231,7 +248,7 @@
 					<span class="font-condensed text-lg text-[#e5e7eb]">{prompts.length}</span> prompt{prompts.length === 1 ? '' : 's'}
 				</p>
 			</div>
-			<PromptGrid {prompts} />
+			<PromptGrid {prompts} onCopy={() => showToast('Prompt copied to clipboard')} />
 		{/if}
 	</main>
 </div>

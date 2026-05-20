@@ -6,79 +6,61 @@
   --font-condensed: 'Oswald', ui-sans-serif, system-ui, sans-serif;
   --color-background: #0f1117;
   --color-surface: #161922;
-  --color-surface-hover: #1e212d;
-  --color-border: #2a2e3b;
-  --color-accent: #6366f1;
-  --color-accent-hover: #4f46e5;
-  --color-muted: #6b7280;
-  --color-text: #e5e7eb;
-  --color-text-secondary: #9ca3af;
-}
-
-body {
-  background-color: var(--color-background);
-  color: var(--color-text);
-  font-family: var(--font-sans);
-}
-
-.prompt-grid {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .prompt-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1024px) {
-  .prompt-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  /* ... */
 }
 
 .prompt-card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  position: relative;
+  background: #161922;
   border-radius: 0.75rem;
   overflow: hidden;
-  position: relative;
-  transition: border-color 0.3s ease;
 }
-
 .prompt-card::before {
   content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 0.85rem;
-  padding: 1.5px;
-  background: linear-gradient(0deg, transparent 0%, transparent 40%, #8b5cf6 50%, #3b82f6 60%, #06b6d4 70%, transparent 80%, transparent 100%);
-  background-size: 100% 250%;
-  background-position: 0% 100%;
+  position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
+  background: linear-gradient(0deg, #6366f1, #3b82f6, #06b6d4, transparent 50%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
+  mask-composite: exclude; opacity: 0; transition: opacity 0.4s ease;
+}
+.prompt-card:hover::before { opacity: 1; }
+
+.prompt-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  .prompt-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .prompt-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* Shockwave ripple — expanding ring from click point */
+.ripple-btn {
+  position: relative;
+  overflow: visible;
+}
+
+.ripple-ring {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.35);
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transform: scale(0);
+  animation: ripple-expand 0.55s ease-out forwards;
 }
 
-.prompt-card:hover::before {
-  opacity: 1;
-  animation: shimmer-border 1.2s ease-out forwards;
-}
-
-@keyframes shimmer-border {
+@keyframes ripple-expand {
   0% {
-    background-position: 0% 100%;
+    transform: scale(0);
+    opacity: 0.7;
   }
   100% {
-    background-position: 0% 0%;
+    transform: scale(3.5);
+    opacity: 0;
   }
-}
-
-.font-condensed {
-  font-family: var(--font-condensed);
 }
