@@ -112,8 +112,18 @@
 
 	<div class="p-4 flex flex-col flex-grow">
 		<h3 class="font-bold text-[#e5e7eb] mb-2 truncate">{prompt.title}</h3>
-		<div class="bg-black/30 border border-[#2a2e3b] rounded p-2 text-xs text-[#9ca3af] mb-4 flex-grow font-mono">
-			<p class="line-clamp-4">{prompt.prompt || prompt.content || 'No prompt content.'}</p>
+		<div class="bg-black/30 border border-[#2a2e3b] rounded p-2 text-xs text-[#9ca3af] mb-4 flex-grow font-mono relative group/prompt">
+			<p class="line-clamp-4 pr-6">{prompt.prompt || prompt.content || 'No prompt content.'}</p>
+			<button
+				type="button"
+				aria-label="Copy prompt"
+				onclick={copyPrompt}
+				class="absolute top-1.5 right-1.5 p-1 rounded bg-[#2a2e3b]/60 text-[#6b7280] opacity-0 group-hover/prompt:opacity-100 hover:text-[#e5e7eb] hover:bg-[#6366f1] transition-all"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+				</svg>
+			</button>
 		</div>
 		<div class="flex items-center justify-between pt-4 border-t border-[#2a2e3b]/50 mt-auto">
 			<button
