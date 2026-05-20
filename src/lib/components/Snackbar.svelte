@@ -1,14 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { subscribe, dismiss, type SnackbarMessage } from '$lib/snackbarStore';
-
-	let snacks = $state<SnackbarMessage[]>([]);
-
-	onMount(() => {
-		return subscribe((s) => {
-			snacks = s;
-		});
-	});
+	import { snackbarStore } from '$lib/snackbarStore.svelte';
 
 	const typeStyles = {
 		success: 'snackbar--success',
@@ -25,9 +16,9 @@
 	};
 </script>
 
-{#if snacks.length > 0}
+{#if snackbarStore.snacks.length > 0}
 	<div class="snackbar-container">
-		{#each snacks as snack (snack.id)}
+		{#each snackbarStore.snacks as snack (snack.id)}
 			<div class="snackbar {typeStyles[snack.type]}" role="alert">
 				<div class="snackbar__content">
 					{@html typeIcons[snack.type]}
@@ -36,7 +27,7 @@
 				<button
 					type="button"
 					class="snackbar__close"
-					onclick={() => dismiss(snack.id)}
+					onclick={() => snackbarStore.dismiss(snack.id)}
 					aria-label="Dismiss"
 				>
 					<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

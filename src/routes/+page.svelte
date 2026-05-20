@@ -3,7 +3,7 @@
 	import PromptGrid from '$lib/components/PromptGrid.svelte';
 	import PromptModal from '$lib/components/PromptModal.svelte';
 	import Snackbar from '$lib/components/Snackbar.svelte';
-	import { showSnackbar } from '$lib/snackbarStore';
+	import { snackbarStore } from '$lib/snackbarStore.svelte';
 	import type { Prompt } from '$lib/types';
 
 	let prompts = $state<Prompt[]>([]);
@@ -16,7 +16,7 @@
 	let loading = $state(true);
 
 	function showToast(message: string, type: 'success' | 'error' | 'warning' | 'info' = 'success') {
-		showSnackbar(message, type);
+		snackbarStore.show(message, type);
 	}
 
 	// Drag-scroll refs
