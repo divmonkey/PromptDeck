@@ -1,16 +1,14 @@
 # Project Status
 
-This document tracks the current status and immediate next steps for the project.
-
 ## Working Checkpoint (2026-05-20)
-**This is a known-good state. If builds break, revert to commit `618b140`.**
+**Revert to commit `6a17c00` if builds break.**
 
-Last known good commit: `618b140 feat: drag-scroll filters, tags filtered by selected type`
+Last known good commit: `6a17c00 refactor: semantic CSS design system for AI-friendly class names`
 
 ### What's Working
 - SvelteKit + Vite scaffold with Tailwind CSS v4
 - SQLite backend (`better-sqlite3`) with `prompts` and `likes` tables
-- Dashboard with search, drag-scroll type/tag filters (no scrollbar), dynamic tag filtering by selected type
+- Dashboard with search, drag-scroll type/tag filters, dynamic tag filtering by selected type
 - Admin panel (`/admin`) with full CRUD
 - 6 demo prompt cards seeded
 - Card gradient border hover animation (purple→blue→cyan)
@@ -18,37 +16,44 @@ Last known good commit: `618b140 feat: drag-scroll filters, tags filtered by sel
 - Like cooldown (24h), view increment, fullscreen image view
 - Rebrand: PromptVault → PromptDeck (Oswald condensed font)
 - Uploads served from `static/uploads/`
+- **Semantic CSS design system** — all visual styles in named classes (AI-friendly)
+- Toast notification on clipboard copy
+- Shockwave ripple on button clicks
+- Dashboard background image (`pd_hero_bg.jpg`)
+- Glassmorphism cards + filter bar
 
 ### Active Issues (Non-Blocking)
-- Svelte accessibility warnings: `PromptModal.svelte` div with click handler
-- `npm run build` warnings: `@import` rule ordering in CSS
+- Svelte accessibility warnings: modal divs with click handlers
+- `npm run build` warning: `@import` rule ordering in CSS
+- Git push shows exit code 1 but actually succeeds (`main -> main` in stderr)
 
-## Completed Tasks
-- Installed `npm` dependencies.
-- Installed `Playwright`.
-- Created `/skill/` directory.
-- Cloned `ui-ux-pro-max-skill` into `/skill/ui-ux-pro-max-skill`.
-- Created `WORKFLOW.MD`, `RULES.MD`, `CONTEXT.MD`.
-- Restructured `public/` directory (created `images`, `css`, `js`, moved assets).
-- Updated `public/index.html` asset paths.
-- Initialized Git repository and performed first commit.
-- **Scaffolded SvelteKit + Vite** (existing project already had this).
-- **Integrated Tailwind CSS v4** with custom theme (background, surface, accent, condensed font).
-- **Configured Oswald condensed font** via Google Fonts + CSS custom property.
-- **Replaced MongoDB with SQLite** (`better-sqlite3`) — all CRUD, like, view, import APIs.
-- **Built dashboard UI** — header, search, type/tag filters, responsive prompt grid, create modal.
-- **All API routes working** — `/api/prompts`, `/api/tags`, `/api/prompts/[id]`, `/api/prompts/[id]/like`, `/api/prompts/[id]/view`, `/api/import`.
-- **Rebrand PromptVault → PromptDeck** with bold condensed uppercase Oswald font.
-- **Card gradient border hover animation** (purple→blue→cyan).
-- **6 demo prompt cards** seeded in DB.
-- **Clipboard copy icon** in prompt box (hover-appearing).
-- **Fixed uploads path** (`public/` → `static/`).
-- **Drag-scroll filters** (no scrollbar) with mouse + touch support.
-- **Tags filtered by selected type** dynamically.
+### Completed Tasks
+- SvelteKit + Vite scaffold
+- Tailwind CSS v4 with dark theme
+- SQLite backend (replaced MongoDB)
+- Dashboard with search, filters, prompt grid
+- Admin panel with CRUD
+- Login button in navbar → `/admin`
+- Rebrand PromptVault → PromptDeck
+- Card gradient border hover animation
+- 6 demo prompt cards seeded
+- Clipboard copy icon in prompt box
+- Fix uploads path (`public/` → `static/`)
+- Drag-scroll filters (no scrollbar)
+- Tags filtered by selected type
+- Shockwave ripple on button clicks
+- Toast notification on copy
+- Dashboard background image
+- Glassmorphism cards + filter bar
+- Login button #a300ff + gradient hover
+- Wider borderless search with purple caret
+- Prompt box bg #0a070e36
+- New hero bg `pd_hero_bg.jpg`
+- Prompt-box transparent border + margins, toast higher contrast
+- **Semantic CSS design system** (AI-friendly class names)
 
-## Pending Tasks
-- **Production Adapter:** Currently using `@sveltejs/adapter-auto`. For a Node.js server, consider switching to `@sveltejs/adapter-node` or keep `adapter-auto` if deploying to a supported platform.
+### Pending Tasks
+- Production adapter: currently `@sveltejs/adapter-auto`
 
-## Next Immediate Steps
-1. Add shockwave click animation to image overlay buttons (view full, copy).
-2. Add toast notification on clipboard copy.
+### Next Immediate Steps
+- User-requested features
