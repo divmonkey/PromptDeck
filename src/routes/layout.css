@@ -1,8 +1,8 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Asap+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Asap+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 
 @theme {
-  --font-sans: 'Mulish', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
   --font-condensed: 'Asap Condensed', ui-sans-serif, system-ui, sans-serif;
   --color-background: #0f1117;
   --color-surface: #161922;
@@ -76,7 +76,6 @@
   font-weight: 700;
   letter-spacing: -0.025em;
   color: #e5e7eb;
-  text-transform: uppercase;
 }
 
 /* ---------- SEARCH ---------- */
